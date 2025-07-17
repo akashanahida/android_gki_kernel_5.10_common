@@ -1,0 +1,82 @@
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      defconfig:
+        description: 'Kernel defconfig to use'
+        required: false
+        default: 'gkidefconfig'
+      arch:
+        description: 'Target architecture'
+        required: false
+        default: 'arm64'
+      cross_compile:
+        description: 'Cross‐compiler prefix'
+        required: false
+        default: 'aarch64-linux-gnu-'
+
+name: Build Android Kernel & AnyKernel3 ZIP
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ARCH: ${{ github.event.inputs.arch }}
+      CROSS_COMPILE: ${{ github.event.inputs.cross_compile }}
+      DEFCONFIG: ${{ github.event.inputs.defconfig }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential bc bison flex libssl-dev libelf-dev \
+            crossbuild-essential-arm64 zip
+
+      - name: Prepare defconfig
+        run: make $DEFCONFIG
+
+      - name: Compile kernel
+        run: make -j$(nproc)
+
+      - name: Compile dtbs
+        run: make dtbs -j$(nproc)
+
+      - name: Compile modules
+        run: make modules -j$(nproc)
+
+      - name: Clone AnyKernel3
+        run: |
+          git clone --depth=1 https://github.com/zacharee/AnyKernel3.git anykernel
+
+      - name: Copy kernel & dtb into AnyKernel3
+        run: |
+          cp arch/${ARCH}/boot/Image anykernel/
+          cp arch/${ARCH}/boot/dts/**/*.dtb anykernel/
+          # 如果需要，把 modules 也一并打包到 anykernel/modules 目录下
+          mkdir -p anykernel/modules
+          make modules_install INSTALL_MOD_PATH=$(pwd)/anykernel/modules
+
+      - name: Build any3.zip
+        working-directory: anykernel
+        run: |
+          zip -r9 ../any3.zip .
+
+      - name: Upload kernel artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: kernel-artifacts
+          path: |
+            arch/${ARCH}/boot/Image
+            arch/${ARCH}/boot/dts/**/*.dtb
+            modules/
+
+      - name: Upload AnyKernel3 ZIP
+        uses: actions/upload-artifact@v3
+        with:
+          name: anykernel3-zip
+          path: any3.zip
