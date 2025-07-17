@@ -20,4 +20,4 @@ jobs:
           android-version: 13
           aosp-clang-version: r450784d
           anykernel3: true
-          anykernel3-url: https://github.com/ztc1997/AnyKernel3
+          #anykernel3-url: https://github.com/ztc1997/AnyKernel3
