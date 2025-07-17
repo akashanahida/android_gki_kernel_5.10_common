@@ -12,7 +12,7 @@ jobs:
         uses: ztc1997/kernel_build_action@squash-conf
         with:
           kernel-url: https://github.com/ztc1997/android_gki_kernel_5.10_common
-          branch: android12-5.10-2024-08
+          branch: android12-5.10-2025-06
           config: gki_defconfig
           arch: arm64
           aosp-gcc: true
