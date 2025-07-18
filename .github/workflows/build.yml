@@ -5,6 +5,9 @@ on:
   push:
   # - ".github/workflows/*"
 
+env:
+  THINLTO_USE_MLGO: false
+
 jobs:
   Build-Kernel:
     strategy:
