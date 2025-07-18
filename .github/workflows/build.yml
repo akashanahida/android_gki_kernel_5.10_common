@@ -27,7 +27,7 @@ jobs:
           aosp-gcc: true
           aosp-clang: true
           #android-version: 13
-          aosp-clang-version: stable
+          aosp-clang-version: main-kernel-build-2024
           #other-clang-url: https://github.com/kdrag0n/proton-clang
           #other-clang-branch: master
           android-version: 12
