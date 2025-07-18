@@ -19,7 +19,7 @@ jobs:
           config: gki_defconfig
           arch: arm64
           aosp-gcc: true
-          aosp-clang: true
+          aosp-clang: false
           android-version: 12
           aosp-clang-version: r383902
           #disable-lto: true
