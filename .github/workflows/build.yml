@@ -2,6 +2,8 @@ name: Build Kernel
 
 on:
   workflow_dispatch:
+  push:
+  # - ".github/workflows/*"
 
 jobs:
   Build-Kernel:
@@ -14,12 +16,12 @@ jobs:
       - name: Build
         uses: dabao1955/kernel_build_action@main
         with:
-          kernel-url: https://github.com/ztc1997/android_gki_kernel_5.10_common
+          kernel-url: https://github.com/akashanahida/android_gki_kernel_5.10_common
           kernel-branch: android12-5.10-2025-06
           config: gki_defconfig
           arch: arm64
           aosp-gcc: true
-          aosp-clang: false
+          aosp-clang: true
           android-version: 12
           aosp-clang-version: r383902
           #disable-lto: true
