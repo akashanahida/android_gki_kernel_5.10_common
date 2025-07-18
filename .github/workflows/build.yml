@@ -31,9 +31,9 @@ jobs:
           #other-clang-branch: master
           android-version: 12
           #aosp-clang-version: r383902
-          #disable-lto: true
+          disable-lto: true
           #ccache: true
           anykernel3: true
           #anykernel3-url: https://github.com/ztc1997/AnyKernel3
-          extra-cmd: "THINLTO_USE_MLGO=false"
+          #extra-cmd: "THINLTO_USE_MLGO=false"
 
