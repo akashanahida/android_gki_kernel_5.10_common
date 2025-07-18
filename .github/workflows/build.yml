@@ -23,6 +23,6 @@ jobs:
           android-version: 12
           aosp-clang-version: r383902
           #disable-lto: true
-          ccache: true
+          #ccache: true
           anykernel3: true
           #anykernel3-url: https://github.com/ztc1997/AnyKernel3
