@@ -7,7 +7,7 @@ on:
 jobs:
   build-kernel:
     name: Build Kernel
-    runs-on: ubuntu-lastet
+    runs-on: ubuntu-latest
     steps:
       - name: Build
         uses: ztc1997/kernel_build_action@squash-conf
