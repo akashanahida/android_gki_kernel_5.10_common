@@ -3,37 +3,21 @@ name: Build Kernel
 on:
   workflow_dispatch:
   push:
-  # - ".github/workflows/*"
-
-env:
-  THINLTO_USE_MLGO: false
-  LLVM_ENABLE_REVERSE_ITERATION: 0
 
 jobs:
-  Build-Kernel:
-    strategy:
-      fail-fast: false
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+  build-kernel:
+    name: Build Kernel
+    runs-on: ubuntu-lastet
     steps:
       - name: Build
-        uses: dabao1955/kernel_build_action@main
+        uses: ztc1997/kernel_build_action@squash-conf
         with:
           kernel-url: https://github.com/ztc1997/android_gki_kernel_5.10_common
-          kernel-branch: android12-5.10-2025-06
+          branch: android12-5.10-2025-06
           config: gki_defconfig
           arch: arm64
           aosp-gcc: true
           aosp-clang: true
-          #android-version: 13
-          aosp-clang-version: stable
-          #other-clang-url: https://github.com/kdrag0n/proton-clang
-          #other-clang-branch: master
           android-version: 12
-          #aosp-clang-version: r383902
-          disable-lto: true
-          #ccache: true
+          aosp-clang-version: r416183b1
           anykernel3: true
-          #anykernel3-url: https://github.com/ztc1997/AnyKernel3
-          #extra-cmd: "THINLTO_USE_MLGO=false"
